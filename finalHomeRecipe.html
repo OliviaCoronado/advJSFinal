@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -8,8 +8,8 @@
   <title> Recipe Project Final </title>
 
   <script src="myRecipes.js"></script>
-  
   <link href="../Recipe.Final/css/finalRecipeStyle.css" rel="stylesheet" type="text/css">
+
 
   <!--CSS-->
 
@@ -38,9 +38,23 @@
     console.log(userDataJS); //works
 
 
+    function pageLoad() {      
+      
+      //Accordion
+      var acc = document.getElementsByClassName("accordion");
+      var i;
 
-
-    function pageLoad() {
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+            panel.style.display = "none";
+          } else {
+            panel.style.display = "block";
+          }
+        });
+      }//end of accordion
 
 
       //Get localStorage and put in IDs -(Hint: JSON Project)
@@ -78,8 +92,6 @@
         document.querySelector("#ingredient_List_Double1").innerHTML += "<li>" + list.amount * 2 + " " + list.measurement + " " + list.name + "</li>";
       });
 
-
-
       //Double Chocolate Chip Cookies - Prep
 
       myRecipes[0].prep_instructions.forEach(function (list2) {
@@ -88,7 +100,6 @@
       });
 
       ///////////////////////////////////////////
-
 
       //Peanut Butter Cookies - IDs
       document.getElementById("prep_Time_span_R2").innerHTML = myRecipes[1].prep_Time + " " + "Minutes";
@@ -124,23 +135,17 @@
       });
 
 
-///////////////////////////////
-//User Recipe Infor Added
 
-      //console.log("Recipe Name:");
-      //console.log(userAddObjectJS.name);
+////////////////////////
+//Recipe filled out now put on to form
+    document.getElementById("prep_Time_span_add").innerHTML = userAddObjectJS.preperationTime;
+    document.getElementById("cooking_Time_span_add").innerHTML = userAddObjectJS.cookingTime;
+    document.getElementById("difficulty_Level_span_add").innerHTML = userAddObjectJS.difficulty;
+    document.getElementById("recipe_Name_span_add").innerHTML = userAddObjectJS.name;
 
-/* 
-      document.getElementById("prep_Time_span_add").innerHTML = userAddObjectJS.preperationTime;
-      document.getElementById("cooking_Time_span_add").innerHTML = userAddObjectJS.cookingTime;
-      document.getElementById("difficulty_Level_span_add").innerHTML = userAddObjectJS.difficulty;
-      document.getElementById("recipe_Name_span_add").innerHTML = userAddObjectJS.name;
-
-
-      document.getElementById("servings_Half_span_add").innerHTML = userAddObjectJS.servings / 2;
-      document.getElementById("servings_span_add").innerHTML = userAddObjectJS.servings;
-      document.getElementById("servings_Double_span_add").innerHTML = userAddObjectJS.servings * 2;
-
+    document.getElementById("servings_Half_span_add").innerHTML = userAddObjectJS.servings / 2;
+    document.getElementById("servings_span_add").innerHTML = userAddObjectJS.servings;
+    document.getElementById("servings_Double_span_add").innerHTML = userAddObjectJS.servings * 2;
 
       //- Ingredient Area
       userDataJS.ingredientList.forEach(function (add) {
@@ -164,28 +169,12 @@
         document.querySelector("#prep_Instructions_Recipe1_add").innerHTML += "<li>" + add2.step + "</li>";
       });
 
-*/
 
 
-      //Accordion
-      var acc = document.getElementsByClassName("accordion");
-      var i;
 
-      for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-          this.classList.toggle("active");
-          var panel = this.nextElementSibling;
-          if (panel.style.display === "block") {
-            panel.style.display = "none";
-          } else {
-            panel.style.display = "block";
-          }
-        });
-      }//end of accordion
 
-      ///////////////////////////////////////    
-      //ADD Recipe Form
-      //id="containerIngredents" area - the div that holds the ingredents list
+      //////////////////Build Form/////////////////////    
+      //div that holds the ingredents list---id="containerIngredents" area
       const containerIngredents = document.querySelector('#containerIngredents');//has to be 'const' not 'let'
       let num = 0;
       document.querySelector('#btn').addEventListener('click', () => { //when button is clicked another element is created / another spot for and ingredient
@@ -202,7 +191,7 @@
         input.classList.add('ingredientsClass'); //create class 
         input.dataset.num = num; //-> I think ...this only lets numbers in the field
 
-        //Amount area
+        //Amount 
         const label_A = document.createElement('label'); //label for amount
         label_A.innerHTML = " Amount: ";//innerHTML
         const amount = document.createElement('input');
@@ -212,7 +201,7 @@
         amount.classList.add('amountClass'); //class
         amount.dataset.num = num;
 
-        //Measurment area
+        //Measurment 
         const label_M = document.createElement('label');//label for measurement
         label_M.innerHTML = ' Measurements: ';
         const measurement = document.createElement('select');//create select for measurement -dropdown
@@ -247,85 +236,56 @@
         container2.appendChild(input);
         containerPrep.appendChild(container2);
       });
-      /*
-//image
-function readURL(input) 
-{
-    document.getElementById("bannerImg").style.display = "block";
 
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById('bannerImg').src =  e.target.result;
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-*/
-      //Click to submit! Get value Pairs - Then in to Local Storage
-
+      ///////Click to submit! Get value Pairs - Then in to Local Storage////////
       recipeLoad.addEventListener("submit", (submit) => { //when submit is hit - value go to local storage
 
         submit.preventDefault();//Stop from from auto submiting - id from form + event listener for submit
 
-
         console.log("Form Submitted - Working!"); // test- working
 
-
-        //javascript variables
-        let name = document.querySelector("#name").value;
-        //let recipeImage = document.querySelector("#recipeImage").value;
-        let servings = document.querySelector("#servings").value;
-
-        let prepTime = document.querySelector("#prepTime").value;
-        let prepTimeClock = document.querySelector("#prepTimeClock").value;
+        //Hold The Values
+        let name = document.querySelector("#name").value = " ";
+        //let recipeImage = document.querySelector("#recipeImage").value = " ";
+        let servings = document.querySelector("#servings").value = " ";
+        let prepTime = document.querySelector("#prepTime").value = " ";
+        let prepTimeClock = document.querySelector("#prepTimeClock").value = " ";
         let preperationTime = prepTime + " " + prepTimeClock;
-
-        let cookTime = document.querySelector("#cookTime").value;
-        let cookTimeClock = document.querySelector("#cookTimeClock").value;
+        let cookTime = document.querySelector("#cookTime").value = " ";
+        let cookTimeClock = document.querySelector("#cookTimeClock").value = " ";
         let cookingTime = cookTime + " " + cookTimeClock;
-
-        let difficulty = document.querySelector("#difficulty").value;
-        let recipeIngredients = document.querySelector('#recipeIngredients').value;
+        let difficulty = document.querySelector("#difficulty").value = " ";
+        let recipeIngredients = document.querySelector('#recipeIngredients').value = " ";
 
 
               
-    //value with object with incrimenting array!
-                let data = {
-                    "ingredientList": [],
-                    "preparationList": []
-                };
-               //forEach creating array of for name, amount, measurement all stored in the ingredientList[] 
-                document.querySelectorAll('input.ingredientsClass').forEach(input => { //?
-                    let num = input.dataset.num;
-                    let amount = document.querySelector(
-                        `input.amountClass[data-num='${num}']`);
-                    let measurement = document.querySelector(
-                        `select.measurementClass[data-num='${num}']`);
+    //value with object with incrimenting array! - created both of these
+        let data = {
+        "ingredientList": [],
+        "preparationList": []
+        };
+        //forEach creating array of for name, amount, measurement all stored in the ingredientList[] 
+        document.querySelectorAll('input.ingredientsClass').forEach(input => { //?
+        let num = input.dataset.num;
+        let amount = document.querySelector(
+        `input.amountClass[data-num='${num}']`);
+        let measurement = document.querySelector(
+        `select.measurementClass[data-num='${num}']`);
+        //console.log(num, amount, measurement); //Test - working
         
-                    console.log(num, amount, measurement); //Test - working
-        
-                    data.ingredientList.push({ //Pushing in to the ingredientList[]
-                        "name": input.value,
-                        "amount": amount.value,
-                        "measurement": measurement.value
-        
-                    });
-                });// end of incrimate for ingredients
+        data.ingredientList.push({ //Pushing in to the ingredientList[]
+          "name": input.value,
+          "amount": amount.value,
+          "measurement": measurement.value
+          });
+          });// end of incrimate for ingredients
 
-                //getting the value from eatch input in the preparation clas and pushing it in to the preparationList[]
-                document.querySelectorAll('input.preparation').forEach(input => {
-
-                data.preparationList.push({
-                "step": input.value 
-                });
-                });// end of incrimate for ingredients
-
-
-
+          //getting the value from eatch input in the preparation clas and pushing it in to the preparationList[]
+          document.querySelectorAll('input.preparation').forEach(input => {
+          data.preparationList.push({
+          "step": input.value 
+          });
+          });// end of incrimate for ingredients
 
         //JS object with all values
         let userAddRecipe = {
@@ -355,13 +315,7 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
 //console.log("userAddRecipe - to JSON");
 //console.log(JSON.stringify(userAddRecipe));
 
-
-
-
       })// end of addEventListener("submit")
-
-
-
 
     }//end of pageLoad()
   </script>
@@ -379,25 +333,25 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
 
     <img src="../Recipe.Final/images/choco.chip.jpeg" alt="cookie1" width="auto" height="300" class="center">
     <div>
-      <button class="accordion">Half Serving</button>
+      <button class="accordion" style="background-color: rgb(248, 236, 62);">Half Serving</button>
       <div class="panel" >
         <p>Serving Size: <span id="servings_Half_span"></span></p>
         <p>Ingredients: <span id="ingredient_List_Half1"></span> </p>
       </div>
 
-      <button class="accordion">Normal Serving</button>
+      <button class="accordion" style="background-color: rgb(87, 218, 87);">Normal Serving</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_span"></span></p>
         <p>Ingredients: <span id="ingredient_List_Normal1"></span> </p><br>
       </div>
 
-      <button class="accordion">Double</button>
+      <button class="accordion" style="background-color: rgb(76, 162, 233);">Double</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_Double_span"></span></p>
         <p>Ingredients: <span id="ingredient_List_Double1"></span> </p>
       </div>
 
-      <button class="accordion">Preparation</button>
+      <button class="accordion" style="background-color: rgb(231, 144, 253);">Preparation</button>
       <div class="panel">
         <p>Preperation Time: <span id="prep_Time_span"></span></p>
         <p>Cooking Time: <span id="cooking_Time_span"></span></p>
@@ -418,25 +372,25 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
 
     <img src="../Recipe.Final/images/pbCookie.jpg" alt="cookie1" width="auto" height="300" class="center" >
     <div>
-      <button class="accordion">Half Serving</button>
+      <button class="accordion" style="background-color: rgb(248, 236, 62);">Half Serving</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_Half_span_R2"></span></p>
         <p>Ingredients: <span id="ingredient_List_Half1_R2"></span> </p>
       </div>
 
-      <button class="accordion">Normal Serving</button>
+      <button class="accordion" style="background-color: rgb(87, 218, 87);">Normal Serving</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_span_R2"></span></p>
         <p>Ingredients: <span id="ingredient_List_Normal1_R2"></span> </p><br>
       </div>
 
-      <button class="accordion">Double</button>
+      <button class="accordion" style="background-color: rgb(76, 162, 233);">Double</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_Double_span_R2"></span></p>
         <p>Ingredients: <span id="ingredient_List_Double1_R2"></span> </p>
       </div>
 
-      <button class="accordion">Preparation</button>
+      <button class="accordion" style="background-color: rgb(231, 144, 253);">Preparation</button>
       <div class="panel">
         <p>Preperation Time: <span id="prep_Time_span_R2"></span></p>
         <p>Cooking Time: <span id="cooking_Time_span_R2"></span></p>
@@ -455,7 +409,7 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
   <div class="panel">
     <div id="formHandle">
     <form id="recipeLoad" name="recipeLoad" method="post" action="UserRecipeDisplay.html">
-      <div id="whitebg">
+
       <div id="whitebg">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" required>
@@ -466,7 +420,7 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
         <img id="imgPreview" src="" alt="Preview">
       </div>
 
- <!--Not Working!!-->     
+ <!--Image - Not Working!!-->     
       <script>
         document.querySelector("#myFileInput").addEventListener("change", function(){
             const reader = new FileReader();
@@ -547,7 +501,7 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
         </select>
       </div>
 
-      <p><button type="button" id="btn">Add Ingredient:</button></p>
+      <p><button type="button" id="btn" style="background-color: white;" >Add Ingredient:</button></p>
       <!--ingredients END-->
 
       <!--Instructions/Prep-->
@@ -559,7 +513,7 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
         </div>
       </div>
 
-      <p> <button type="button" id="btn-prep">Add Another Step</button></p>
+      <p> <button type="button" id="btn-prep" style="background-color: white;">Add Another Step</button></p>
   
   <!--Instructions/Prep END-->
 
@@ -585,25 +539,25 @@ localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON t
 
     <img id="imgPreview" src="" alt="Preview" width="auto" height="300">
     <div>
-      <button class="accordion">Half Serving</button>
+      <button class="accordion" style="background-color: rgb(248, 236, 62);">Half Serving</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_Half_span_add"></span></p>
         <p>Ingredients: <span id="ingredient_List_Half1_add"></span> </p>
       </div>
 
-      <button class="accordion">Normal Serving</button>
+      <button class="accordion" style="background-color: rgb(87, 218, 87);">Normal Serving</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_span_add"></span></p>
         <p>Ingredients: <span id="ingredient_List_Normal1_add"></span> </p><br>
       </div>
 
-      <button class="accordion">Double</button>
+      <button class="accordion" style="background-color: rgb(76, 162, 233);">Double</button>
       <div class="panel">
         <p>Serving Size: <span id="servings_Double_span_add"></span></p>
         <p>Ingredients: <span id="ingredient_List_Double1_add"></span> </p>
       </div>
 
-      <button class="accordion">Preparation</button>
+      <button class="accordion" style="background-color: rgb(231, 144, 253);">Preparation</button>
       <div class="panel">
         <p>Preperation Time: <span id="prep_Time_span_add"></span></p>
         <p>Cooking Time: <span id="cooking_Time_span_add"></span></p>
