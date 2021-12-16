@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name=viewpoint content="width=device=width, initial-scale=1.0">
+  <title> Recipe Project Final </title>
+
+  <script src="myRecipes.js"></script>
+  
+  <link href="../Recipe.Final/css/finalRecipeStyle.css" rel="stylesheet" type="text/css">
+
+  <!--CSS-->
+
+  <script>
+
+    let JSONObjectArray = localStorage.getItem("myRecipeJSONObject");	//get 'studentSchoolInfo' from local storage (JSON format) give value(JSONObject)
+    let myRecipeLS = JSON.parse(JSONObjectArray);		// parse - turn JSON Object in to JS Object
+
+    console.log("myRecipeLS- JS out of local storage: "); //works
+    console.log(myRecipeLS); //works
+
+    //console.log("myRecipeLS - prep_Time");
+    //console.log(myRecipes[0].prep_Time);
+
+    //Out of Local Storage
+    let JSONObjectRecipe = localStorage.getItem("userAddRecipeObj");	//get 'studentSchoolInfo' from local storage (JSON format) give value(JSONObject)
+    let userAddObjectJS = JSON.parse(JSONObjectRecipe);		// parse - turn JSON Object in to JS Object
+
+    console.log("userAddObjectJS- JS out of local storage: "); //works
+    console.log(userAddObjectJS); //works
+
+    let jsonData = localStorage.getItem("userRecipeData");	//get 'studentSchoolInfo' from local storage (JSON format) give value(JSONObject)
+    let userDataJS = JSON.parse(jsonData);		// parse - turn JSON Object in to JS Object
+
+    console.log("userDataJS- JS out of local storage: "); //works
+    console.log(userDataJS); //works
+
+
+
+
+    function pageLoad() {
+
+
+      //Get localStorage and put in IDs -(Hint: JSON Project)
+      document.getElementById("prep_Time_span").innerHTML = myRecipes[0].prep_Time + " " + "Minutes";
+      document.getElementById("cooking_Time_span").innerHTML = myRecipes[0].cooking_Time + " " + "Minutes";
+      document.getElementById("difficulty_Level_span").innerHTML = myRecipes[0].difficulty_Level;
+      document.getElementById("recipe_Name_span").innerHTML = myRecipes[0].recipe_Name;
+
+
+      document.getElementById("servings_Half_span").innerHTML = myRecipes[0].servings / 2;
+      document.getElementById("servings_span").innerHTML = myRecipes[0].servings;
+      document.getElementById("servings_Double_span").innerHTML = myRecipes[0].servings * 2;
+
+
+      //Double Chocolate Chip Cookies - ingredients
+
+      //document.getElementById("first_ing_name").innerHTML = myRecipes[0].ingredient_List[0].amount  + " " + myRecipes[0].ingredient_List[0].measurement + " " +  myRecipes[0].ingredient_List[0].name;
+
+      //for (x = 0; x < myRecipes[0].ingredient_List.length; x++) {  // Display as for loop but forEach would be better
+      //console.log( myRecipes[0].ingredient_List[x].amount + " " + myRecipes[0].ingredient_List[x].measurement + " " + myRecipes[0].ingredient_List[x].name)
+      //} 
+
+      myRecipes[0].ingredient_List.forEach(function (list) {
+        //console.log( list.amount + " " + list.measurement + " " + list.name) //works
+        document.querySelector("#ingredient_List_Normal1").innerHTML += "<li>" + list.amount + " " + list.measurement + " " + list.name + "</li>";
+      });
+
+      myRecipes[0].ingredient_List.forEach(function (list) {
+        //console.log( list.amount + " " + list.measurement + " " + list.name) //works
+        document.querySelector("#ingredient_List_Half1").innerHTML += "<li>" + list.amount / 2 + " " + list.measurement + " " + list.name + "</li>";
+      });
+
+      myRecipes[0].ingredient_List.forEach(function (list) {
+        //console.log( list.amount + " " + list.measurement + " " + list.name) //works
+        document.querySelector("#ingredient_List_Double1").innerHTML += "<li>" + list.amount * 2 + " " + list.measurement + " " + list.name + "</li>";
+      });
+
+
+
+      //Double Chocolate Chip Cookies - Prep
+
+      myRecipes[0].prep_instructions.forEach(function (list2) {
+        //console.log( list2.step) //works
+        document.querySelector("#prep_Instructions_Recipe1").innerHTML += "<li>" + list2.step + "</li>";
+      });
+
+      ///////////////////////////////////////////
+
+
+      //Peanut Butter Cookies - IDs
+      document.getElementById("prep_Time_span_R2").innerHTML = myRecipes[1].prep_Time + " " + "Minutes";
+      document.getElementById("cooking_Time_span_R2").innerHTML = myRecipes[1].cooking_Time + " " + "Minutes";
+      document.getElementById("difficulty_Level_span_R2").innerHTML = myRecipes[1].difficulty_Level;
+      document.getElementById("recipe_Name_span_R2").innerHTML = myRecipes[1].recipe_Name;
+
+
+      document.getElementById("servings_Half_span_R2").innerHTML = myRecipes[1].servings / 2;
+      document.getElementById("servings_span_R2").innerHTML = myRecipes[1].servings;
+      document.getElementById("servings_Double_span_R2").innerHTML = myRecipes[1].servings * 2;
+
+      //Peanut Butter Cookies - Ingredients
+      myRecipes[1].ingredient_List.forEach(function (list3) {
+        //console.log(list3.amount + " " + list3.measurement + " " + list3.name) //works
+        document.querySelector("#ingredient_List_Normal1_R2").innerHTML += "<li>" + list3.amount + " " + list3.measurement + " " + list3.name + "</li>";
+      });
+
+      myRecipes[1].ingredient_List.forEach(function (list3) {
+        //console.log( list3.amount + " " + list3.measurement + " " + list3.name) //works
+        document.querySelector("#ingredient_List_Half1_R2").innerHTML += "<li>" + list3.amount / 2 + " " + list3.measurement + " " + list3.name + "</li>";
+      });
+
+      myRecipes[1].ingredient_List.forEach(function (list3) {
+        //console.log( list3.amount + " " + list3.measurement + " " + list3.name) //works
+        document.querySelector("#ingredient_List_Double1_R2").innerHTML += "<li>" + list3.amount * 2 + " " + list3.measurement + " " + list3.name + "</li>";
+      });
+
+      //Peanut Butter Cookies - Prep
+      myRecipes[1].prep_instructions.forEach(function (list4) {
+        //console.log( list4.step) //works
+        document.querySelector("#prep_Instructions_Recipe1_R2").innerHTML += "<li>" + list4.step + "</li>";
+      });
+
+
+///////////////////////////////
+//User Recipe Infor Added
+
+      //console.log("Recipe Name:");
+      //console.log(userAddObjectJS.name);
+
+/* 
+      document.getElementById("prep_Time_span_add").innerHTML = userAddObjectJS.preperationTime;
+      document.getElementById("cooking_Time_span_add").innerHTML = userAddObjectJS.cookingTime;
+      document.getElementById("difficulty_Level_span_add").innerHTML = userAddObjectJS.difficulty;
+      document.getElementById("recipe_Name_span_add").innerHTML = userAddObjectJS.name;
+
+
+      document.getElementById("servings_Half_span_add").innerHTML = userAddObjectJS.servings / 2;
+      document.getElementById("servings_span_add").innerHTML = userAddObjectJS.servings;
+      document.getElementById("servings_Double_span_add").innerHTML = userAddObjectJS.servings * 2;
+
+
+      //- Ingredient Area
+      userDataJS.ingredientList.forEach(function (add) {
+        //console.log( add.amount + " " + add.measurement + " " + add.name) //works
+        document.querySelector("#ingredient_List_Normal1_add").innerHTML += "<li>" + add.amount + " " + add.measurement + " " + add.name + "</li>";
+      });
+
+      userDataJS.ingredientList.forEach(function (add) {
+        //console.log(add.amount /2 + " " + add.measurement + " " + add.name) //works
+        document.querySelector("#ingredient_List_Half1_add").innerHTML += "<li>" + add.amount / 2 + " " + add.measurement + " " + add.name + "</li>";
+      });
+
+      userDataJS.ingredientList.forEach(function (add) {
+        //console.log(add.amount * 2 + " " + add.measurement + " " + add.name) //works
+        document.querySelector("#ingredient_List_Double1_add").innerHTML += "<li>" + add.amount * 2 + " " + add.measurement + " " + add.name + "</li>";
+      });
+
+      //Peanut Butter Cookies - Prep
+      userDataJS.preparationList.forEach(function (add2) {
+        //console.log(add2.step) //works
+        document.querySelector("#prep_Instructions_Recipe1_add").innerHTML += "<li>" + add2.step + "</li>";
+      });
+
+*/
+
+
+      //Accordion
+      var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+            panel.style.display = "none";
+          } else {
+            panel.style.display = "block";
+          }
+        });
+      }//end of accordion
+
+      ///////////////////////////////////////    
+      //ADD Recipe Form
+      //id="containerIngredents" area - the div that holds the ingredents list
+      const containerIngredents = document.querySelector('#containerIngredents');//has to be 'const' not 'let'
+      let num = 0;
+      document.querySelector('#btn').addEventListener('click', () => { //when button is clicked another element is created / another spot for and ingredient
+        ++num;
+
+        const container = document.createElement('div');//create div 
+
+        const label_I = document.createElement('label'); //create ingredient label
+        label_I.innerHTML = "Add Ingredient: "
+
+        const input = document.createElement('input');//create input
+        input.type = 'text'; //type is type='text'
+        input.size = '50'; //size - the style
+        input.classList.add('ingredientsClass'); //create class 
+        input.dataset.num = num; //-> I think ...this only lets numbers in the field
+
+        //Amount area
+        const label_A = document.createElement('label'); //label for amount
+        label_A.innerHTML = " Amount: ";//innerHTML
+        const amount = document.createElement('input');
+        amount.type = 'number';
+        amount.step = '.1'; // effect type so there are deimals - not just whole numbers
+        amount.size = "50";
+        amount.classList.add('amountClass'); //class
+        amount.dataset.num = num;
+
+        //Measurment area
+        const label_M = document.createElement('label');//label for measurement
+        label_M.innerHTML = ' Measurements: ';
+        const measurement = document.createElement('select');//create select for measurement -dropdown
+        measurement.classList.add('measurementClass'); //class
+        measurement.innerHTML = "<option>None</option> <option>Teaspoons</option> <option>Tablespoons</option> <option>Cup</option> <option>Can</option> <option>No Measurement</option>";
+        measurement.dataset.num = num;
+
+        //everything goes to the very last spot 
+        container.appendChild(label_I);
+        container.appendChild(input);
+        container.appendChild(label_A);
+        container.appendChild(amount);
+        container.appendChild(label_M);
+        container.appendChild(measurement);
+        containerIngredents.appendChild(container);
+      });
+
+      //Prep-Instructions
+      const containerPrep = document.querySelector('#containerPrep');
+
+      document.querySelector('#btn-prep').addEventListener('click', () => { //event listisener - on the click of the button another step Field is add
+
+        const container2 = document.createElement('div');//creates div
+        const label_P = document.createElement('label');//creates label
+        label_P.innerHTML = 'Add Instructions: ';
+        const input = document.createElement('input'); //create input
+        input.type = 'text';
+        input.size = '50';
+        input.classList.add('preparation');//create class
+        //everything goes to the very last spot 
+        container2.appendChild(label_P);
+        container2.appendChild(input);
+        containerPrep.appendChild(container2);
+      });
+      /*
+//image
+function readURL(input) 
+{
+    document.getElementById("bannerImg").style.display = "block";
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById('bannerImg').src =  e.target.result;
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+*/
+      //Click to submit! Get value Pairs - Then in to Local Storage
+
+      recipeLoad.addEventListener("submit", (submit) => { //when submit is hit - value go to local storage
+
+        submit.preventDefault();//Stop from from auto submiting - id from form + event listener for submit
+
+
+        console.log("Form Submitted - Working!"); // test- working
+
+
+        //javascript variables
+        let name = document.querySelector("#name").value;
+        //let recipeImage = document.querySelector("#recipeImage").value;
+        let servings = document.querySelector("#servings").value;
+
+        let prepTime = document.querySelector("#prepTime").value;
+        let prepTimeClock = document.querySelector("#prepTimeClock").value;
+        let preperationTime = prepTime + " " + prepTimeClock;
+
+        let cookTime = document.querySelector("#cookTime").value;
+        let cookTimeClock = document.querySelector("#cookTimeClock").value;
+        let cookingTime = cookTime + " " + cookTimeClock;
+
+        let difficulty = document.querySelector("#difficulty").value;
+        let recipeIngredients = document.querySelector('#recipeIngredients').value;
+
+
+              
+    //value with object with incrimenting array!
+                let data = {
+                    "ingredientList": [],
+                    "preparationList": []
+                };
+               //forEach creating array of for name, amount, measurement all stored in the ingredientList[] 
+                document.querySelectorAll('input.ingredientsClass').forEach(input => { //?
+                    let num = input.dataset.num;
+                    let amount = document.querySelector(
+                        `input.amountClass[data-num='${num}']`);
+                    let measurement = document.querySelector(
+                        `select.measurementClass[data-num='${num}']`);
+        
+                    console.log(num, amount, measurement); //Test - working
+        
+                    data.ingredientList.push({ //Pushing in to the ingredientList[]
+                        "name": input.value,
+                        "amount": amount.value,
+                        "measurement": measurement.value
+        
+                    });
+                });// end of incrimate for ingredients
+
+                //getting the value from eatch input in the preparation clas and pushing it in to the preparationList[]
+                document.querySelectorAll('input.preparation').forEach(input => {
+
+                data.preparationList.push({
+                "step": input.value 
+                });
+                });// end of incrimate for ingredients
+
+
+
+
+        //JS object with all values
+        let userAddRecipe = {
+          name,
+          //recipeImage,
+          servings,
+          prepTime,
+          prepTimeClock,
+          preperationTime,
+          cookTime,
+          cookTimeClock,
+          cookingTime,
+          difficulty,
+          recipeIngredients,
+          data
+        };
+
+//Into Local Storage
+localStorage.clear();  
+
+localStorage.setItem('userRecipeData', JSON.stringify(data)); //JSON to localStorage
+
+localStorage.setItem('userAddRecipeObj', JSON.stringify(userAddRecipe));//JSON to localStorage
+
+//console.log("Data -to JSON");
+//console.log(JSON.stringify(data));
+//console.log("userAddRecipe - to JSON");
+//console.log(JSON.stringify(userAddRecipe));
+
+
+
+
+      })// end of addEventListener("submit")
+
+
+
+
+    }//end of pageLoad()
+  </script>
+</head>
+
+<body onload="pageLoad()">
+<header>
+
+  <img src="../Recipe.Final/images/cookie_banner2.jpg"  class="center"/>
+</header>    
+  <!--Recipe 1-->
+  <section class="container">
+  <button class="accordion"><span id="recipe_Name_span"></button>
+  <div class="panel">
+
+    <img src="../Recipe.Final/images/choco.chip.jpeg" alt="cookie1" width="auto" height="300" class="center">
+    <div>
+      <button class="accordion">Half Serving</button>
+      <div class="panel" >
+        <p>Serving Size: <span id="servings_Half_span"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Half1"></span> </p>
+      </div>
+
+      <button class="accordion">Normal Serving</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_span"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Normal1"></span> </p><br>
+      </div>
+
+      <button class="accordion">Double</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_Double_span"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Double1"></span> </p>
+      </div>
+
+      <button class="accordion">Preparation</button>
+      <div class="panel">
+        <p>Preperation Time: <span id="prep_Time_span"></span></p>
+        <p>Cooking Time: <span id="cooking_Time_span"></span></p>
+        <p>Difficulty: <span id="difficulty_Level_span"></span></p>
+        <p>Instructions: <span id="prep_Instructions_Recipe1"></span></p>
+      </div>
+    </div>
+  
+  </div>
+  <!--Recipe 1 END-->
+</section>
+
+<section class="container">
+
+  <!--Recipe 2-->
+  <button class="accordion"><span id="recipe_Name_span_R2"></span></button>
+  <div class="panel">
+
+    <img src="../Recipe.Final/images/pbCookie.jpg" alt="cookie1" width="auto" height="300" class="center" >
+    <div>
+      <button class="accordion">Half Serving</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_Half_span_R2"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Half1_R2"></span> </p>
+      </div>
+
+      <button class="accordion">Normal Serving</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_span_R2"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Normal1_R2"></span> </p><br>
+      </div>
+
+      <button class="accordion">Double</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_Double_span_R2"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Double1_R2"></span> </p>
+      </div>
+
+      <button class="accordion">Preparation</button>
+      <div class="panel">
+        <p>Preperation Time: <span id="prep_Time_span_R2"></span></p>
+        <p>Cooking Time: <span id="cooking_Time_span_R2"></span></p>
+        <p>Difficulty: <span id="difficulty_Level_span_R2"></span></p>
+        <p>Instructions: <span id="prep_Instructions_Recipe1_R2"></span></p>
+      </div>
+
+    </div>
+  </div>
+  <!--Recipe 2 END-->
+</section>
+
+<section class="container">
+  <!--Add Recipe -->
+  <button class="accordion">Add Recipe</button>
+  <div class="panel">
+    <div id="formHandle">
+    <form id="recipeLoad" name="recipeLoad" method="post" action="UserRecipeDisplay.html">
+      <div id="whitebg">
+      <div id="whitebg">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+      </div>
+
+      <div id="whitebg">
+        <input type="file" id="myFileInput">
+        <img id="imgPreview" src="" alt="Preview">
+      </div>
+
+ <!--Not Working!!-->     
+      <script>
+        document.querySelector("#myFileInput").addEventListener("change", function(){
+            const reader = new FileReader();
+
+            reader.addEventListener("load", () =>{
+            localStorage.setItem("recent-image", reader.result)
+            });
+
+            reader.readAsDataURL(this.files[0]);
+        });
+        document.addEventListener("submit", () =>{
+            const recentImageDataURL = localStorage.getItem("recent-image");
+
+            if (recentImageDataURL){
+                document.querySelector("#imgPreview").setAttribute("src", recentImageDataURL);
+            }
+        });
+</script>
+
+      <div id="whitebg">
+        <label for="servings">Servings:</label>
+        <input type="number" id="servings" required>
+      </div>
+
+      <div id="whitebg">
+        <label for="prepTime">Preperation Time:</label>
+        <input type="number" id="prepTime" name="prepTime" required>
+
+        <label for="prepTimeClock">Hours/Minutes:</label>
+        <select id="prepTimeClock" required>
+          <option value="">Select</option>
+          <option value="Hours">Hr(s)</option>
+          <option value="Minutes">Min(s)</option>
+        </select>
+      </div>
+
+      <div id="whitebg">
+        <label for="cookTime">Cooking Time:</label>
+        <input type="number" id="cookTime" name="cookTime" required>
+
+        <label for="cookTimeClock">Hours/Minutes:</label>
+        <select id="cookTimeClock" required>
+          <option value="">Select</option>
+          <option value="Hours">Hr(s)</option>
+          <option value="Minutes">Min(s)</option>
+        </select>
+      </div>
+
+      <div id="whitebg">
+        <label for="difficulty">Recipe difficulty:</label>
+        <select name="difficulty" id="difficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+</div>
+      <!--ingredients area-->
+      <div id="containerIngredents">
+        <h3>Recipe Ingredients:</h3>
+
+        <label for="recipeIngredients"> Add Ingredient:</label>
+        <input type="text" name="recipeIngredients" size="50" class="ingredientsClass" data-num="0"
+          id="recipeIngredients" required>
+
+        <label for="ingredientAmount">Amount:</label>
+        <input type="number" value="" name="ingredientAmount" class="amountClass" data-num="0" id="ingredientAmount"
+          size="15" step=".1" required>
+
+        <label for="measurement">Measurements:</label>
+        <select name="measurement" class="measurementClass" data-num="0" id="measurement" required>
+          <option value="">None</option>
+          <option value="Teaspoons">Teaspoons</option>
+          <option value="Tablespoons">Tablespoons</option>
+          <option value="Cups">Cups</option>
+          <option value="Cans">Cans</option>
+          <option value="">No Measurement</option>
+        </select>
+      </div>
+
+      <p><button type="button" id="btn">Add Ingredient:</button></p>
+      <!--ingredients END-->
+
+      <!--Instructions/Prep-->
+      <div id="containerPrep">
+        <h3>Intructions:</h3>
+        <div>
+          <label for="preparation"> Add Instructions: </label>
+          <input type="text" size="50" value="" class="preparation" id="preparation">
+        </div>
+      </div>
+
+      <p> <button type="button" id="btn-prep">Add Another Step</button></p>
+  
+  <!--Instructions/Prep END-->
+
+
+  <!--Reset/Submit-->
+  <div id="whitebg">
+    <input type="submit" value="Submit" >
+    <input type="reset" value="Reset">
+  </div>
+  <!--Reset/Submit END-->
+  </form>
+  </div><!--Form END-->
+  
+  </div><!--panel end-->
+  <!--Add Recipe END-->
+</section>
+
+
+<section class="container">
+  <!--New Recipe -->
+  <button class="accordion">Your Recipe: <span id="recipe_Name_span_add"></span></button>
+  <div class="panel">
+
+    <img id="imgPreview" src="" alt="Preview" width="auto" height="300">
+    <div>
+      <button class="accordion">Half Serving</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_Half_span_add"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Half1_add"></span> </p>
+      </div>
+
+      <button class="accordion">Normal Serving</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_span_add"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Normal1_add"></span> </p><br>
+      </div>
+
+      <button class="accordion">Double</button>
+      <div class="panel">
+        <p>Serving Size: <span id="servings_Double_span_add"></span></p>
+        <p>Ingredients: <span id="ingredient_List_Double1_add"></span> </p>
+      </div>
+
+      <button class="accordion">Preparation</button>
+      <div class="panel">
+        <p>Preperation Time: <span id="prep_Time_span_add"></span></p>
+        <p>Cooking Time: <span id="cooking_Time_span_add"></span></p>
+        <p>Difficulty: <span id="difficulty_Level_span_add"></span></p>
+        <p>Instructions: <span id="prep_Instructions_Recipe1_add"></span></p>
+
+      </div>
+    </div>
+  <!--New Recipe END-->
+</section>
+
+</body>
+
+</html>
